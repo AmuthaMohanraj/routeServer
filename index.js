@@ -129,10 +129,9 @@ app.post('/createEmployeeList', (req, res) => {
 });
 
 
-
 // updateEmployeeList
-app.put('updateEmployeeList',(req,res)=>{
-  connection.query("UPDATE employeedetail SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, job_title = ?, department = ?, salary = ?, manager_id = ? WHERE employee_id = ?"
+app.put('/updateEmployeeList',(req,res)=>{
+  connection.query("UPDATE employeedetails SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, job_title = ?, department = ?, salary = ?, manager_id = ? WHERE employee_id = ?"
   ,[req.body.first_name,req.body.last_name,req.body.email,req.body.phone_number,req.body.hire_date,req.body.job_title,req.body.department,req.body.salary,req.body.manager_id,req.body.employee_id],(error,result)=>{
     if(error){
       console.log('error is',error);
@@ -145,8 +144,8 @@ app.put('updateEmployeeList',(req,res)=>{
 })
 
 // deleteEmployeeList
-app.put('deleteEmployeeList',(req,res)=>{
-  connection.query("update employeedetails set isActive=0 where employee_id=?"[req.body.employee_id],(error,result)=>{
+app.put('/deleteEmployeeList',(req,res)=>{
+  connection.query("update employeedetails set isActive=0 where employee_id=?",[req.body.employee_id],(error,result)=>{
     if(error){
       console.log('error is',error);
       return error
@@ -156,6 +155,7 @@ app.put('deleteEmployeeList',(req,res)=>{
     }
   })
 })
+
 
 app.listen(port,()=>{
     console.log('server is running',port)
