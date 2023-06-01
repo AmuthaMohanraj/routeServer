@@ -15,11 +15,9 @@ const connection=mysql.createConnection({
     database:'company'
 })
 
-
-
 // CompanyList
 app.get('/company',(req,res)=>{
-  connection.query("select*from companydetails",(error,result)=>{
+  connection.query("select*from companydetails where isActive=1",(error,result)=>{
     if(error){
      console.log("error is",error)
     }else{
@@ -56,10 +54,10 @@ app.post('/createCompanyList',(req,res)=>{
 })
 
 // UpdateUser
-app.put('/updateUser/:id',(req,res)=>{
+app.put('/updateUser',(req,res)=>{
   connection.query(
     'UPDATE companydetails SET company_name = ?, industry = ?, address = ?, city = ?, state_province = ?, country = ?, phone_number = ?, email = ?, website = ?, ceo_owner = ?, year_founded = ?, revenue = ?, employee_count = ?, description = ? WHERE company_id = ?',
-    [req.body.company_name, req.body.industry, req.body.address, req.body.city, req.body.state_province, req.body.country, req.body.phone_number, req.body.email, req.body.website, req.body.ceo_owner, req.body.year_founded, req.body.revenue, req.body.employee_count, req.body.description, req.params.id],
+    [req.body.company_name, req.body.industry, req.body.address, req.body.city, req.body.state_province, req.body.country, req.body.phone_number, req.body.email, req.body.website, req.body.ceo_owner, req.body.year_founded, req.body.revenue, req.body.employee_count, req.body.description, req.body.company_id],
     (error, result) => {
       if (error) {
         console.log('Error:', error);
@@ -73,8 +71,8 @@ app.put('/updateUser/:id',(req,res)=>{
 })
 
 // deletUser
-app.put('/deleteUser/:id',(req,res)=>{
-  connection.query("delete from companydetails WHERE company_id = ?",[req.params.id],(error,result)=>{
+app.put('/deleteUser',(req,res)=>{
+  connection.query("update companydetails set isActive=0 WHERE company_id = ?",[req.body.company_id],(error,result)=>{
     if(error){
       console.log('error')
       return
@@ -117,5 +115,12 @@ app.get('/employee',(req,res)=>{
 app.listen(port,()=>{
     console.log('server is running',port)
 })
+
+connection.connect((err)=>{
+  if (err){
+    return err
+  } 
+  console.log("Connected!");
+});
 
 
