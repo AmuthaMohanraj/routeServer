@@ -27,6 +27,7 @@ app.get('/company',(req,res)=>{
   })
 })
 
+
 // AboutCompanyDetails
 app.get('/getCompanyById/:id',(req,res)=>{
     connection.query("select*from companydetails where company_id=?",[req.params.id],(error,result)=>{
